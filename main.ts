@@ -5,7 +5,7 @@ namespace SpriteKind {
 }
 scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile`, function (sprite22, location) {
     tiles.setTileAt(location, assets.tile`transparency16`)
-    Ball.setVelocity(Ball.vx, Ball.vy * -1)
+    Ball.setVelocity(Ball.vx, Ball.vy * SPEEDDDD)
     number_of_bricks = number_of_bricks - 1
     if (number_of_bricks == 0) {
         tiles.setCurrentTilemap(tilemap`level36`)
@@ -19,6 +19,7 @@ scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile`, function (sprite
     game.setGameOverMessage(true, "GAME OVER! You WIN!! :3")
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    SPEEDDDD = -1
     info.setLife(1)
     dead = sprites.create(img`
         2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
@@ -79,7 +80,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     tiles.setCurrentTilemap(tilemap`Bricks`)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
-    Ball.setVelocity(Ball.vx, Ball.vy * -1)
+    SPEEDDDD = SPEEDDDD - 0.005
+    Ball.y += -10
+    Ball.setVelocity(Ball.vx, Ball.vy * SPEEDDDD)
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Death, function (sprite2, otherSprite2) {
     game.gameOver(false)
@@ -89,6 +92,7 @@ let Shroom: Sprite = null
 let House: Sprite = null
 let Rock: Sprite = null
 let dead: Sprite = null
+let SPEEDDDD = 0
 let Ball: Sprite = null
 let number_of_bricks = 0
 number_of_bricks = 20

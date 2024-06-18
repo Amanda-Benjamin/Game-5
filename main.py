@@ -9,7 +9,7 @@ def on_overlap_tile(sprite22, location):
     tiles.set_tile_at(location, assets.tile("""
         transparency16
     """))
-    Ball.set_velocity(Ball.vx, Ball.vy * -1)
+    Ball.set_velocity(Ball.vx, Ball.vy * SPEEDDDD)
     number_of_bricks = number_of_bricks - 1
     if number_of_bricks == 0:
         tiles.set_current_tilemap(tilemap("""
@@ -31,7 +31,8 @@ scene.on_overlap_tile(SpriteKind.projectile,
     on_overlap_tile)
 
 def on_a_pressed():
-    global dead, Rock, House, Shroom, Ball
+    global SPEEDDDD, dead, Rock, House, Shroom, Ball
+    SPEEDDDD = -1
     info.set_life(1)
     dead = sprites.create(img("""
             2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
@@ -105,7 +106,10 @@ def on_a_pressed():
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
 
 def on_on_overlap(sprite, otherSprite):
-    Ball.set_velocity(Ball.vx, Ball.vy * -1)
+    global SPEEDDDD
+    SPEEDDDD = SPEEDDDD - 0.005
+    Ball.y += -10
+    Ball.set_velocity(Ball.vx, Ball.vy * SPEEDDDD)
 sprites.on_overlap(SpriteKind.player, SpriteKind.projectile, on_on_overlap)
 
 def on_on_overlap2(sprite2, otherSprite2):
@@ -117,6 +121,7 @@ Shroom: Sprite = None
 House: Sprite = None
 Rock: Sprite = None
 dead: Sprite = None
+SPEEDDDD = 0
 Ball: Sprite = None
 number_of_bricks = 0
 number_of_bricks = 20
